@@ -3,9 +3,13 @@ define(["./kernel", "../has", "./lang"], function(dojo, has, lang){
 	//		dojo/_base/declare
 
 	var mix = lang.mixin, op = Object.prototype, opts = op.toString,
-		, counter = 0, cname = "constructor";
+		xtor, counter = 0, cname = "constructor";
 
-	var xtor = has("csp-restrictions") ? function(){} : new Function;
+	if(!has("csp-restrictions")){
+		xtor = new Function;
+	} else {
+		xtor = function(){};
+	}
 
 	function err(msg, cls){ throw new Error("declare" + (cls ? " " + cls : "") + ": " + msg); }
 
